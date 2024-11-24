@@ -10,6 +10,7 @@ const logger = require("morgan");
 const connectDB = require("./config/database");
 const mainRoutes = require("./routes/main");
 const postRoutes = require("./routes/posts");
+const PORT = 3000; 
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -30,7 +31,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-//Logging
+//Logging (concise output colored by response status for development use)
 app.use(logger("dev"));
 
 //Use forms for put / delete
@@ -58,6 +59,9 @@ app.use("/", mainRoutes);
 app.use("/post", postRoutes);
 
 //Server Running
-app.listen(process.env.PORT, () => {
-  console.log("Server is running, you better catch it!");
+app.listen(PORT || process.env.PORT, () => {
+  console.log(
+    `Server is running, you better catch it!, http://localhost:${PORT}`
+  );
 });
+
